@@ -9578,6 +9578,27 @@ public final class StringUtil {
     }
 
     /**
+     * Converts a snake_case column name (e.g. {@code zone_id}) to a camelCase Java field name
+     * (e.g. {@code zoneId}).
+     */
+    public static @NotNull String toCamelCase(@NotNull String snakeCase) {
+        StringBuilder result = new StringBuilder();
+        boolean nextUpper = false;
+
+        for (char c : snakeCase.toCharArray()) {
+            if (c == '_')
+                nextUpper = true;
+            else if (nextUpper) {
+                result.append(Character.toUpperCase(c));
+                nextUpper = false;
+            } else
+                result.append(c);
+        }
+
+        return result.toString();
+    }
+
+    /**
      * Converts the given CharSequence to a char[].
      *
      * @param source the {@code CharSequence} to be processed.
