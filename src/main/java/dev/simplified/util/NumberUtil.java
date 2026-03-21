@@ -14,49 +14,11 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
 /**
- * <p>Provides extra functionality for Java Number classes.</p>
+ * Utility methods for Java {@link Number} classes, including parsing, formatting,
+ * comparison, and mathematical operations.
  */
 @UtilityClass
 public final class NumberUtil {
-
-    /** Reusable Long constant for zero. */
-    public static final Long LONG_ZERO = 0L;
-    /** Reusable Long constant for one. */
-    public static final Long LONG_ONE = 1L;
-    /** Reusable Long constant for minus one. */
-    public static final Long LONG_MINUS_ONE = -1L;
-    /** Reusable Integer constant for zero. */
-    public static final Integer INTEGER_ZERO = 0;
-    /** Reusable Integer constant for one. */
-    public static final Integer INTEGER_ONE = 1;
-    /** Reusable Integer constant for two */
-    public static final Integer INTEGER_TWO = 2;
-    /** Reusable Integer constant for minus one. */
-    public static final Integer INTEGER_MINUS_ONE = -1;
-    /** Reusable Short constant for zero. */
-    public static final Short SHORT_ZERO = (short) 0;
-    /** Reusable Short constant for one. */
-    public static final Short SHORT_ONE = (short) 1;
-    /** Reusable Short constant for minus one. */
-    public static final Short SHORT_MINUS_ONE = (short) -1;
-    /** Reusable Byte constant for zero. */
-    public static final Byte BYTE_ZERO = (byte) 0;
-    /** Reusable Byte constant for one. */
-    public static final Byte BYTE_ONE = (byte) 1;
-    /** Reusable Byte constant for minus one. */
-    public static final Byte BYTE_MINUS_ONE = (byte) -1;
-    /** Reusable Double constant for zero. */
-    public static final Double DOUBLE_ZERO = 0.0d;
-    /** Reusable Double constant for one. */
-    public static final Double DOUBLE_ONE = 1.0d;
-    /** Reusable Double constant for minus one. */
-    public static final Double DOUBLE_MINUS_ONE = -1.0d;
-    /** Reusable Float constant for zero. */
-    public static final Float FLOAT_ZERO = 0.0f;
-    /** Reusable Float constant for one. */
-    public static final Float FLOAT_ONE = 1.0f;
-    /** Reusable Float constant for minus one. */
-    public static final Float FLOAT_MINUS_ONE = -1.0f;
 
     private static final Pattern FLOATING_POINT_PATTERN = fpPattern();
     private static Pattern fpPattern() {
@@ -105,31 +67,45 @@ public final class NumberUtil {
         FORMAT_SUFFIX.put(1_000_000_000_000_000_000L, "E");
     }
 
+    /**
+     * Returns the smallest integer greater than or equal to the given number,
+     * using bit manipulation for performance.
+     *
+     * @param number  the value to ceil
+     * @return the ceiling of the given number as an {@code int}
+     */
     public static int ceil(double number) {
         int floor = (int)number;
         return (((double)floor == number) ? floor : (floor + (int)(~Double.doubleToRawLongBits(number) >>> 63)));
     }
 
+    /**
+     * Returns the largest integer less than or equal to the given number,
+     * using bit manipulation for performance.
+     *
+     * @param number  the value to floor
+     * @return the floor of the given number as an {@code int}
+     */
     public static int floor(double number) {
         int floor = (int)number;
         return (((double)floor == number) ? floor : (floor - (int)(Double.doubleToRawLongBits(number) >>> 63)));
     }
 
     /**
-     * Formats a number to have k, M, B, etc.
+     * Formats a number with a magnitude suffix (k, M, B, etc.).
      *
-     * @param value The number to format
-     * @return The formatted number
+     * @param value  the number to format
+     * @return the formatted number with suffix
      */
     public static String format(double value) {
         return format((long)value);
     }
 
     /**
-     * Formats a number to have k, M, B, etc.
+     * Formats a number with a magnitude suffix (k, M, B, etc.).
      *
-     * @param value The number to format
-     * @return The formatted number
+     * @param value  the number to format
+     * @return the formatted number with suffix
      */
     @SuppressWarnings("all")
     public static String format(long value) {
@@ -147,6 +123,12 @@ public final class NumberUtil {
         return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
     }
 
+    /**
+     * Converts a roman numeral string to its integer value.
+     *
+     * @param roman  the roman numeral string to convert
+     * @return the integer value of the roman numeral
+     */
     public static int fromRoman(String roman) {
         int result = 0;
 
@@ -173,27 +155,55 @@ public final class NumberUtil {
         return result;
     }
 
+    /**
+     * Clamps a value to the specified range.
+     *
+     * @param value  the value to clamp
+     * @param min  the minimum allowed value
+     * @param max  the maximum allowed value
+     * @return the clamped value within [{@code min}, {@code max}]
+     */
     public static int ensureRange(int value, int min, int max) {
         return Math.min(Math.max(value, min), max);
     }
 
+    /**
+     * Checks whether a value falls within the specified inclusive range.
+     *
+     * @param value  the value to check
+     * @param min  the minimum bound (inclusive)
+     * @param max  the maximum bound (inclusive)
+     * @return {@code true} if the value is within [{@code min}, {@code max}]
+     */
     public static boolean inRange(int value, int min, int max) {
         return (value >= min) && (value <= max);
     }
 
+    /**
+     * Checks whether the given {@code double} is finite (not infinite and not NaN).
+     *
+     * @param d  the value to check
+     * @return {@code true} if the value is finite
+     */
     public static boolean isFinite(double d) {
         return Math.abs(d) <= 1.7976931348623157E308D;
     }
 
+    /**
+     * Checks whether the given {@code float} is finite (not infinite and not NaN).
+     *
+     * @param f  the value to check
+     * @return {@code true} if the value is finite
+     */
     public static boolean isFinite(float f) {
         return Math.abs(f) <= 3.4028235E38F;
     }
 
     /**
-     * Formats a number to have it's ordinal value as the suffix.
+     * Formats a number with its ordinal suffix (e.g., 1st, 2nd, 3rd, 4th).
      *
-     * @param value Number to format.
-     * @return Formatted number.
+     * @param value  the number to format
+     * @return the number with its ordinal suffix
      */
     public static String ordinal(int value) {
         String[] sufixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
@@ -205,20 +215,20 @@ public final class NumberUtil {
     }
 
     /**
-     * Gets a truely random number.
+     * Generates a random integer between the specified minimum and {@link Integer#MAX_VALUE}.
      *
-     * @param minimum the lowest number allowed
-     * @return a random integer between the specified boundaries
+     * @param minimum  the lowest number allowed (inclusive)
+     * @return a random integer between the specified minimum and {@code Integer.MAX_VALUE}
      */
     public static int rand(int minimum) {
         return rand(minimum, Integer.MAX_VALUE);
     }
 
     /**
-     * Gets a truely random number.
+     * Generates a random integer between the specified minimum and maximum (inclusive).
      *
-     * @param minimum the lowest number allowed
-     * @param maximum the highest number allowed
+     * @param minimum  the lowest number allowed (inclusive)
+     * @param maximum  the highest number allowed (inclusive)
      * @return a random integer between the specified boundaries
      */
     public static int rand(int minimum, int maximum) {
@@ -226,21 +236,21 @@ public final class NumberUtil {
     }
 
     /**
-     * Round to nearest decimal point.
+     * Rounds a value to the nearest integer.
      *
-     * @param value The number to round up.
-     * @return The rounded number.
+     * @param value  the number to round
+     * @return the rounded number
      */
     public static double round(double value) {
         return round(value, 0);
     }
 
     /**
-     * Round to nearest decimal point.
+     * Rounds a value to the specified number of decimal places.
      *
-     * @param value The number to round up.
-     * @param precision How many decimal points to keep.
-     * @return The rounded number.
+     * @param value  the number to round
+     * @param precision  the number of decimal places to keep
+     * @return the rounded number
      */
     public static double round(double value, int precision) {
         int scale = (int)Math.pow(10, precision);
@@ -248,36 +258,42 @@ public final class NumberUtil {
     }
 
     /**
-     * Rounds number up to nearest multipleOf value
+     * Rounds a number up to the nearest multiple of the given value.
      *
-     * @param number the number to round up
-     * @param multipleOf multiple to round to
-     * @return rounded up version of number
+     * @param number  the number to round up
+     * @param multipleOf  the multiple to round to
+     * @return the rounded up value
      */
     public static int roundUp(double number, int multipleOf) {
         return (int)(Math.ceil(number / multipleOf) * multipleOf);
     }
 
     /**
-     * Rounds number down to nearest multipleOf value
+     * Rounds a number down to the nearest multiple of the given value.
      *
-     * @param number the number to round down
-     * @param multipleOf multiple to round to
-     * @return rounded down version of number
+     * @param number  the number to round down
+     * @param multipleOf  the multiple to round to
+     * @return the rounded down value
      */
     public static int roundDown(double number, int multipleOf) {
         return (int)(Math.floor(number / multipleOf) * multipleOf);
     }
 
+    /**
+     * Returns the square of the given number.
+     *
+     * @param number  the value to square
+     * @return the square of the number
+     */
     public static double square(double number) {
         return number * number;
     }
 
     /**
-     * Converts the given number to roman numerals.
+     * Converts the given integer to a roman numeral string.
      *
-     * @param number Number to convert to roman numerals
-     * @return Roman numeral of value
+     * @param number  the number to convert to roman numerals
+     * @return the roman numeral representation
      */
     public static String toRoman(int number) {
         if (number == 0) return "";
@@ -289,10 +305,28 @@ public final class NumberUtil {
         return TO_ROMAN_MAP.get(highest) + toRoman(number - highest);
     }
 
+    /**
+     * Converts a value to the specified {@link Number} subclass, returning zero on failure.
+     *
+     * @param <N>  the target number type
+     * @param value  the value to convert
+     * @param clazz  the target number class
+     * @return the converted number, or zero if conversion fails
+     */
     public static <N extends Number> N to(Object value, Class<N> clazz) {
         return to(value, 0, clazz);
     }
 
+    /**
+     * Converts a value to the specified {@link Number} subclass, returning the
+     * default value if the input is not a creatable number.
+     *
+     * @param <N>  the target number type
+     * @param value  the value to convert
+     * @param defaultValue  the fallback value if conversion fails
+     * @param clazz  the target number class
+     * @return the converted number, or the default value if conversion fails
+     */
     public static <N extends Number> N to(Object value, Number defaultValue, Class<N> clazz) {
         Reflection<N> number = new Reflection<>(clazz);
         String strValue = String.valueOf(value);
@@ -300,45 +334,46 @@ public final class NumberUtil {
     }
 
     /**
-     * Gets the hexadecimal string of an integer.
+     * Converts a number to its hexadecimal string representation.
      *
-     * @param number to convert
-     * @return converted byte array as hexadecimal string
+     * @param number  the number to convert
+     * @return the hexadecimal string representation
      */
     public static String toHexString(long number) {
         return Long.valueOf(String.valueOf(number), 16).toString();
     }
 
     /**
-     * <p>Convert a {@code String} to an {@code int}, returning
-     * {@code zero} if the conversion fails.</p>
+     * Converts a {@code String} to an {@code int}, returning
+     * {@code zero} if the conversion fails.
      *
-     * <p>If the string is {@code null}, {@code zero} is returned.</p>
+     * <p>
+     * If the string is {@code null}, {@code zero} is returned.
      *
      * <pre>
-     *   NumberUtils.toInt(null) = 0
-     *   NumberUtils.toInt("")   = 0
-     *   NumberUtils.toInt("1")  = 1
+     *   NumberUtil.toInt(null) = 0
+     *   NumberUtil.toInt("")   = 0
+     *   NumberUtil.toInt("1")  = 1
      * </pre>
      *
      * @param str  the string to convert, may be null
-     * @return the int represented by the string, or {@code zero} if
-     *  conversion fails
+     * @return the int represented by the string, or {@code zero} if conversion fails
      */
     public static int toInt(final String str) {
         return toInt(str, 0);
     }
 
     /**
-     * <p>Convert a {@code String} to an {@code int}, returning a
-     * default value if the conversion fails.</p>
+     * Converts a {@code String} to an {@code int}, returning a
+     * default value if the conversion fails.
      *
-     * <p>If the string is {@code null}, the default value is returned.</p>
+     * <p>
+     * If the string is {@code null}, the default value is returned.
      *
      * <pre>
-     *   NumberUtils.toInt(null, 1) = 1
-     *   NumberUtils.toInt("", 1)   = 1
-     *   NumberUtils.toInt("1", 0)  = 1
+     *   NumberUtil.toInt(null, 1) = 1
+     *   NumberUtil.toInt("", 1)   = 1
+     *   NumberUtil.toInt("1", 0)  = 1
      * </pre>
      *
      * @param str  the string to convert, may be null
@@ -357,35 +392,36 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Convert a {@code String} to a {@code long}, returning
-     * {@code zero} if the conversion fails.</p>
+     * Converts a {@code String} to a {@code long}, returning
+     * {@code zero} if the conversion fails.
      *
-     * <p>If the string is {@code null}, {@code zero} is returned.</p>
+     * <p>
+     * If the string is {@code null}, {@code zero} is returned.
      *
      * <pre>
-     *   NumberUtils.toLong(null) = 0L
-     *   NumberUtils.toLong("")   = 0L
-     *   NumberUtils.toLong("1")  = 1L
+     *   NumberUtil.toLong(null) = 0L
+     *   NumberUtil.toLong("")   = 0L
+     *   NumberUtil.toLong("1")  = 1L
      * </pre>
      *
      * @param str  the string to convert, may be null
-     * @return the long represented by the string, or {@code 0} if
-     *  conversion fails
+     * @return the long represented by the string, or {@code 0} if conversion fails
      */
     public static long toLong(final String str) {
         return toLong(str, 0L);
     }
 
     /**
-     * <p>Convert a {@code String} to a {@code long}, returning a
-     * default value if the conversion fails.</p>
+     * Converts a {@code String} to a {@code long}, returning a
+     * default value if the conversion fails.
      *
-     * <p>If the string is {@code null}, the default value is returned.</p>
+     * <p>
+     * If the string is {@code null}, the default value is returned.
      *
      * <pre>
-     *   NumberUtils.toLong(null, 1L) = 1L
-     *   NumberUtils.toLong("", 1L)   = 1L
-     *   NumberUtils.toLong("1", 0L)  = 1L
+     *   NumberUtil.toLong(null, 1L) = 1L
+     *   NumberUtil.toLong("", 1L)   = 1L
+     *   NumberUtil.toLong("1", 0L)  = 1L
      * </pre>
      *
      * @param str  the string to convert, may be null
@@ -404,20 +440,22 @@ public final class NumberUtil {
     }
 
     /**
-     * Gets the base 10 representation of the specified hexadecimal string.
+     * Parses a hexadecimal string to its base-10 {@code Long} representation.
      *
-     * @param hexString Hexadecimal string to convert.
-     * @return Base 10 version.
+     * @param hexString  the hexadecimal string to convert, may be null
+     * @return the base-10 value, or {@code 0L} if conversion fails
      */
     public static Long toHexLong(String hexString) {
         return toHexLong(hexString, 0L);
     }
 
     /**
-     * Gets the base 10 representation of the specified hexadecimal string.
+     * Parses a hexadecimal string to its base-10 {@code Long} representation,
+     * returning a default value if the conversion fails.
      *
-     * @param hexString Hexadecimal string to convert.
-     * @return Base 10 version.
+     * @param hexString  the hexadecimal string to convert, may be null
+     * @param defaultValue  the default value to return on failure
+     * @return the base-10 value, or the default value if conversion fails
      */
     public static Long toHexLong(String hexString, final long defaultValue) {
         if (hexString == null)
@@ -431,43 +469,41 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Convert a {@code String} to a {@code float}, returning
-     * {@code 0.0f} if the conversion fails.</p>
+     * Converts a {@code String} to a {@code float}, returning
+     * {@code 0.0f} if the conversion fails.
      *
-     * <p>If the string {@code str} is {@code null},
-     * {@code 0.0f} is returned.</p>
+     * <p>
+     * If the string is {@code null}, {@code 0.0f} is returned.
      *
      * <pre>
-     *   NumberUtils.toFloat(null)   = 0.0f
-     *   NumberUtils.toFloat("")     = 0.0f
-     *   NumberUtils.toFloat("1.5")  = 1.5f
+     *   NumberUtil.toFloat(null)   = 0.0f
+     *   NumberUtil.toFloat("")     = 0.0f
+     *   NumberUtil.toFloat("1.5")  = 1.5f
      * </pre>
      *
-     * @param str the string to convert, may be {@code null}
-     * @return the float represented by the string, or {@code 0.0f}
-     *  if conversion fails
+     * @param str  the string to convert, may be null
+     * @return the float represented by the string, or {@code 0.0f} if conversion fails
      */
     public static float toFloat(final String str) {
         return toFloat(str, 0.0f);
     }
 
     /**
-     * <p>Convert a {@code String} to a {@code float}, returning a
-     * default value if the conversion fails.</p>
+     * Converts a {@code String} to a {@code float}, returning a
+     * default value if the conversion fails.
      *
-     * <p>If the string {@code str} is {@code null}, the default
-     * value is returned.</p>
+     * <p>
+     * If the string is {@code null}, the default value is returned.
      *
      * <pre>
-     *   NumberUtils.toFloat(null, 1.1f)   = 1.0f
-     *   NumberUtils.toFloat("", 1.1f)     = 1.1f
-     *   NumberUtils.toFloat("1.5", 0.0f)  = 1.5f
+     *   NumberUtil.toFloat(null, 1.1f)   = 1.1f
+     *   NumberUtil.toFloat("", 1.1f)     = 1.1f
+     *   NumberUtil.toFloat("1.5", 0.0f)  = 1.5f
      * </pre>
      *
-     * @param str the string to convert, may be {@code null}
-     * @param defaultValue the default value
-     * @return the float represented by the string, or defaultValue
-     *  if conversion fails
+     * @param str  the string to convert, may be null
+     * @param defaultValue  the default value
+     * @return the float represented by the string, or defaultValue if conversion fails
      */
     public static float toFloat(final String str, final float defaultValue) {
         if (str == null)
@@ -481,43 +517,41 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Convert a {@code String} to a {@code double}, returning
-     * {@code 0.0d} if the conversion fails.</p>
+     * Converts a {@code String} to a {@code double}, returning
+     * {@code 0.0d} if the conversion fails.
      *
-     * <p>If the string {@code str} is {@code null},
-     * {@code 0.0d} is returned.</p>
+     * <p>
+     * If the string is {@code null}, {@code 0.0d} is returned.
      *
      * <pre>
-     *   NumberUtils.toDouble(null)   = 0.0d
-     *   NumberUtils.toDouble("")     = 0.0d
-     *   NumberUtils.toDouble("1.5")  = 1.5d
+     *   NumberUtil.toDouble(null)   = 0.0d
+     *   NumberUtil.toDouble("")     = 0.0d
+     *   NumberUtil.toDouble("1.5")  = 1.5d
      * </pre>
      *
-     * @param str the string to convert, may be {@code null}
-     * @return the double represented by the string, or {@code 0.0d}
-     *  if conversion fails
+     * @param str  the string to convert, may be null
+     * @return the double represented by the string, or {@code 0.0d} if conversion fails
      */
     public static double toDouble(final String str) {
         return toDouble(str, 0.0d);
     }
 
     /**
-     * <p>Convert a {@code String} to a {@code double}, returning a
-     * default value if the conversion fails.</p>
+     * Converts a {@code String} to a {@code double}, returning a
+     * default value if the conversion fails.
      *
-     * <p>If the string {@code str} is {@code null}, the default
-     * value is returned.</p>
+     * <p>
+     * If the string is {@code null}, the default value is returned.
      *
      * <pre>
-     *   NumberUtils.toDouble(null, 1.1d)   = 1.1d
-     *   NumberUtils.toDouble("", 1.1d)     = 1.1d
-     *   NumberUtils.toDouble("1.5", 0.0d)  = 1.5d
+     *   NumberUtil.toDouble(null, 1.1d)   = 1.1d
+     *   NumberUtil.toDouble("", 1.1d)     = 1.1d
+     *   NumberUtil.toDouble("1.5", 0.0d)  = 1.5d
      * </pre>
      *
-     * @param str the string to convert, may be {@code null}
-     * @param defaultValue the default value
-     * @return the double represented by the string, or defaultValue
-     *  if conversion fails
+     * @param str  the string to convert, may be null
+     * @param defaultValue  the default value
+     * @return the double represented by the string, or defaultValue if conversion fails
      */
     public static double toDouble(final String str, final double defaultValue) {
         if (str == null) {
@@ -531,75 +565,71 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Convert a {@code BigDecimal} to a {@code double}.</p>
+     * Converts a {@code BigDecimal} to a {@code double}.
      *
-     * <p>If the {@code BigDecimal} {@code value} is
-     * {@code null}, then the specified default value is returned.</p>
+     * <p>
+     * If the {@code BigDecimal} is {@code null}, {@code 0.0d} is returned.
      *
      * <pre>
-     *   NumberUtils.toDouble(null)                     = 0.0d
-     *   NumberUtils.toDouble(BigDecimal.valudOf(8.5d)) = 8.5d
+     *   NumberUtil.toDouble(null)                     = 0.0d
+     *   NumberUtil.toDouble(BigDecimal.valueOf(8.5d)) = 8.5d
      * </pre>
      *
-     * @param value the {@code BigDecimal} to convert, may be {@code null}.
-     * @return the double represented by the {@code BigDecimal} or
-     *  {@code 0.0d} if the {@code BigDecimal} is {@code null}.
+     * @param value  the {@code BigDecimal} to convert, may be null
+     * @return the double represented by the {@code BigDecimal}, or {@code 0.0d} if null
      */
     public static double toDouble(final BigDecimal value) {
         return toDouble(value, 0.0d);
     }
 
     /**
-     * <p>Convert a {@code BigDecimal} to a {@code double}.</p>
-     *
-     * <p>If the {@code BigDecimal} {@code value} is
-     * {@code null}, then the specified default value is returned.</p>
+     * Converts a {@code BigDecimal} to a {@code double}, returning a
+     * default value if the input is {@code null}.
      *
      * <pre>
-     *   NumberUtils.toDouble(null, 1.1d)                     = 1.1d
-     *   NumberUtils.toDouble(BigDecimal.valudOf(8.5d), 1.1d) = 8.5d
+     *   NumberUtil.toDouble(null, 1.1d)                     = 1.1d
+     *   NumberUtil.toDouble(BigDecimal.valueOf(8.5d), 1.1d) = 8.5d
      * </pre>
      *
-     * @param value the {@code BigDecimal} to convert, may be {@code null}.
-     * @param defaultValue the default value
-     * @return the double represented by the {@code BigDecimal} or the
-     *  defaultValue if the {@code BigDecimal} is {@code null}.
+     * @param value  the {@code BigDecimal} to convert, may be null
+     * @param defaultValue  the default value
+     * @return the double represented by the {@code BigDecimal}, or the default if null
      */
     public static double toDouble(final BigDecimal value, final double defaultValue) {
         return value == null ? defaultValue : value.doubleValue();
     }
 
-    //-----------------------------------------------------------------------
     /**
-     * <p>Convert a {@code String} to a {@code byte}, returning
-     * {@code zero} if the conversion fails.</p>
+     * Converts a {@code String} to a {@code byte}, returning
+     * {@code zero} if the conversion fails.
      *
-     * <p>If the string is {@code null}, {@code zero} is returned.</p>
+     * <p>
+     * If the string is {@code null}, {@code zero} is returned.
      *
      * <pre>
-     *   NumberUtils.toByte(null) = 0
-     *   NumberUtils.toByte("")   = 0
-     *   NumberUtils.toByte("1")  = 1
+     *   NumberUtil.toByte(null) = 0
+     *   NumberUtil.toByte("")   = 0
+     *   NumberUtil.toByte("1")  = 1
      * </pre>
      *
      * @param str  the string to convert, may be null
-     * @return the byte represented by the string, or {@code zero} if
-     *  conversion fails
+     * @return the byte represented by the string, or {@code zero} if conversion fails
      */
     public static byte toByte(final String str) {
         return toByte(str, (byte) 0);
     }
 
     /**
-     * <p>Convert a {@code String} to a {@code byte}, returning a
-     * default value if the conversion fails.</p>
+     * Converts a {@code String} to a {@code byte}, returning a
+     * default value if the conversion fails.
      *
-     * <p>If the string is {@code null}, the default value is returned.</p>
+     * <p>
+     * If the string is {@code null}, the default value is returned.
      *
      * <pre>
-     *   NumberUtils.toByte(null, 1) = 1
-     *   NumberUtils.toByte("", 1)   = 1
-     *   NumberUtils.toByte("1", 0)  = 1
+     *   NumberUtil.toByte(null, 1) = 1
+     *   NumberUtil.toByte("", 1)   = 1
+     *   NumberUtil.toByte("1", 0)  = 1
      * </pre>
      *
      * @param str  the string to convert, may be null
@@ -618,35 +648,36 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Convert a {@code String} to a {@code short}, returning
-     * {@code zero} if the conversion fails.</p>
+     * Converts a {@code String} to a {@code short}, returning
+     * {@code zero} if the conversion fails.
      *
-     * <p>If the string is {@code null}, {@code zero} is returned.</p>
+     * <p>
+     * If the string is {@code null}, {@code zero} is returned.
      *
      * <pre>
-     *   NumberUtils.toShort(null) = 0
-     *   NumberUtils.toShort("")   = 0
-     *   NumberUtils.toShort("1")  = 1
+     *   NumberUtil.toShort(null) = 0
+     *   NumberUtil.toShort("")   = 0
+     *   NumberUtil.toShort("1")  = 1
      * </pre>
      *
      * @param str  the string to convert, may be null
-     * @return the short represented by the string, or {@code zero} if
-     *  conversion fails
+     * @return the short represented by the string, or {@code zero} if conversion fails
      */
     public static short toShort(final String str) {
         return toShort(str, (short) 0);
     }
 
     /**
-     * <p>Convert a {@code String} to an {@code short}, returning a
-     * default value if the conversion fails.</p>
+     * Converts a {@code String} to a {@code short}, returning a
+     * default value if the conversion fails.
      *
-     * <p>If the string is {@code null}, the default value is returned.</p>
+     * <p>
+     * If the string is {@code null}, the default value is returned.
      *
      * <pre>
-     *   NumberUtils.toShort(null, 1) = 1
-     *   NumberUtils.toShort("", 1)   = 1
-     *   NumberUtils.toShort("1", 0)  = 1
+     *   NumberUtil.toShort(null, 1) = 1
+     *   NumberUtil.toShort("", 1)   = 1
+     *   NumberUtil.toShort("1", 0)  = 1
      * </pre>
      *
      * @param str  the string to convert, may be null
@@ -665,30 +696,31 @@ public final class NumberUtil {
     }
 
     /**
-     * Convert a {@code BigDecimal} to a {@code BigDecimal} with a scale of
-     * two that has been rounded using {@code RoundingMode.HALF_EVEN}. If the supplied
-     * {@code value} is null, then {@code BigDecimal.ZERO} is returned.
+     * Converts a {@code BigDecimal} to a {@code BigDecimal} with a scale of
+     * two that has been rounded using {@code RoundingMode.HALF_EVEN}. If the
+     * supplied value is null, then {@code BigDecimal.ZERO} is returned.
      *
-     * <p>Note, the scale of a {@code BigDecimal} is the number of digits to the right of the
-     * decimal point.</p>
+     * <p>
+     * Note, the scale of a {@code BigDecimal} is the number of digits to the
+     * right of the decimal point.
      *
-     * @param value the {@code BigDecimal} to convert, may be null.
-     * @return the scaled, with appropriate rounding, {@code BigDecimal}.
+     * @param value  the {@code BigDecimal} to convert, may be null
+     * @return the scaled, with appropriate rounding, {@code BigDecimal}
      */
     public static BigDecimal toScaledBigDecimal(final BigDecimal value) {
-        return toScaledBigDecimal(value, INTEGER_TWO, RoundingMode.HALF_EVEN);
+        return toScaledBigDecimal(value, 2, RoundingMode.HALF_EVEN);
     }
 
     /**
-     * Convert a {@code BigDecimal} to a {@code BigDecimal} whose scale is the
-     * specified value with a {@code RoundingMode} applied. If the input {@code value}
-     * is {@code null}, we simply return {@code BigDecimal.ZERO}.
+     * Converts a {@code BigDecimal} to a {@code BigDecimal} whose scale is the
+     * specified value with a {@code RoundingMode} applied. If the input value
+     * is {@code null}, returns {@code BigDecimal.ZERO}.
      *
-     * @param value the {@code BigDecimal} to convert, may be null.
-     * @param scale the number of digits to the right of the decimal point.
-     * @param roundingMode a rounding behavior for numerical operations capable of
-     *  discarding precision.
-     * @return the scaled, with appropriate rounding, {@code BigDecimal}.
+     * @param value  the {@code BigDecimal} to convert, may be null
+     * @param scale  the number of digits to the right of the decimal point
+     * @param roundingMode  a rounding behavior for numerical operations capable of
+     *  discarding precision
+     * @return the scaled, with appropriate rounding, {@code BigDecimal}
      */
     public static BigDecimal toScaledBigDecimal(final BigDecimal value, final int scale, final RoundingMode roundingMode) {
         if (value == null) {
@@ -701,30 +733,31 @@ public final class NumberUtil {
     }
 
     /**
-     * Convert a {@code Float} to a {@code BigDecimal} with a scale of
-     * two that has been rounded using {@code RoundingMode.HALF_EVEN}. If the supplied
-     * {@code value} is null, then {@code BigDecimal.ZERO} is returned.
+     * Converts a {@code Float} to a {@code BigDecimal} with a scale of
+     * two that has been rounded using {@code RoundingMode.HALF_EVEN}. If the
+     * supplied value is null, then {@code BigDecimal.ZERO} is returned.
      *
-     * <p>Note, the scale of a {@code BigDecimal} is the number of digits to the right of the
-     * decimal point.</p>
+     * <p>
+     * Note, the scale of a {@code BigDecimal} is the number of digits to the
+     * right of the decimal point.
      *
-     * @param value the {@code Float} to convert, may be null.
-     * @return the scaled, with appropriate rounding, {@code BigDecimal}.
+     * @param value  the {@code Float} to convert, may be null
+     * @return the scaled, with appropriate rounding, {@code BigDecimal}
      */
     public static BigDecimal toScaledBigDecimal(final Float value) {
-        return toScaledBigDecimal(value, INTEGER_TWO, RoundingMode.HALF_EVEN);
+        return toScaledBigDecimal(value, 2, RoundingMode.HALF_EVEN);
     }
 
     /**
-     * Convert a {@code Float} to a {@code BigDecimal} whose scale is the
-     * specified value with a {@code RoundingMode} applied. If the input {@code value}
-     * is {@code null}, we simply return {@code BigDecimal.ZERO}.
+     * Converts a {@code Float} to a {@code BigDecimal} whose scale is the
+     * specified value with a {@code RoundingMode} applied. If the input value
+     * is {@code null}, returns {@code BigDecimal.ZERO}.
      *
-     * @param value the {@code Float} to convert, may be null.
-     * @param scale the number of digits to the right of the decimal point.
-     * @param roundingMode a rounding behavior for numerical operations capable of
-     *  discarding precision.
-     * @return the scaled, with appropriate rounding, {@code BigDecimal}.
+     * @param value  the {@code Float} to convert, may be null
+     * @param scale  the number of digits to the right of the decimal point
+     * @param roundingMode  a rounding behavior for numerical operations capable of
+     *  discarding precision
+     * @return the scaled, with appropriate rounding, {@code BigDecimal}
      */
     public static BigDecimal toScaledBigDecimal(final Float value, final int scale, final RoundingMode roundingMode) {
         if (value == null) {
@@ -738,30 +771,31 @@ public final class NumberUtil {
     }
 
     /**
-     * Convert a {@code Double} to a {@code BigDecimal} with a scale of
-     * two that has been rounded using {@code RoundingMode.HALF_EVEN}. If the supplied
-     * {@code value} is null, then {@code BigDecimal.ZERO} is returned.
+     * Converts a {@code Double} to a {@code BigDecimal} with a scale of
+     * two that has been rounded using {@code RoundingMode.HALF_EVEN}. If the
+     * supplied value is null, then {@code BigDecimal.ZERO} is returned.
      *
-     * <p>Note, the scale of a {@code BigDecimal} is the number of digits to the right of the
-     * decimal point.</p>
+     * <p>
+     * Note, the scale of a {@code BigDecimal} is the number of digits to the
+     * right of the decimal point.
      *
-     * @param value the {@code Double} to convert, may be null.
-     * @return the scaled, with appropriate rounding, {@code BigDecimal}.
+     * @param value  the {@code Double} to convert, may be null
+     * @return the scaled, with appropriate rounding, {@code BigDecimal}
      */
     public static BigDecimal toScaledBigDecimal(final Double value) {
-        return toScaledBigDecimal(value, INTEGER_TWO, RoundingMode.HALF_EVEN);
+        return toScaledBigDecimal(value, 2, RoundingMode.HALF_EVEN);
     }
 
     /**
-     * Convert a {@code Double} to a {@code BigDecimal} whose scale is the
-     * specified value with a {@code RoundingMode} applied. If the input {@code value}
-     * is {@code null}, we simply return {@code BigDecimal.ZERO}.
+     * Converts a {@code Double} to a {@code BigDecimal} whose scale is the
+     * specified value with a {@code RoundingMode} applied. If the input value
+     * is {@code null}, returns {@code BigDecimal.ZERO}.
      *
-     * @param value the {@code Double} to convert, may be null.
-     * @param scale the number of digits to the right of the decimal point.
-     * @param roundingMode a rounding behavior for numerical operations capable of
-     *  discarding precision.
-     * @return the scaled, with appropriate rounding, {@code BigDecimal}.
+     * @param value  the {@code Double} to convert, may be null
+     * @param scale  the number of digits to the right of the decimal point
+     * @param roundingMode  a rounding behavior for numerical operations capable of
+     *  discarding precision
+     * @return the scaled, with appropriate rounding, {@code BigDecimal}
      */
     public static BigDecimal toScaledBigDecimal(final Double value, final int scale, final RoundingMode roundingMode) {
         if (value == null) {
@@ -775,30 +809,31 @@ public final class NumberUtil {
     }
 
     /**
-     * Convert a {@code String} to a {@code BigDecimal} with a scale of
-     * two that has been rounded using {@code RoundingMode.HALF_EVEN}. If the supplied
-     * {@code value} is null, then {@code BigDecimal.ZERO} is returned.
+     * Converts a {@code String} to a {@code BigDecimal} with a scale of
+     * two that has been rounded using {@code RoundingMode.HALF_EVEN}. If the
+     * supplied value is null, then {@code BigDecimal.ZERO} is returned.
      *
-     * <p>Note, the scale of a {@code BigDecimal} is the number of digits to the right of the
-     * decimal point.</p>
+     * <p>
+     * Note, the scale of a {@code BigDecimal} is the number of digits to the
+     * right of the decimal point.
      *
-     * @param value the {@code String} to convert, may be null.
-     * @return the scaled, with appropriate rounding, {@code BigDecimal}.
+     * @param value  the {@code String} to convert, may be null
+     * @return the scaled, with appropriate rounding, {@code BigDecimal}
      */
     public static BigDecimal toScaledBigDecimal(final String value) {
-        return toScaledBigDecimal(value, INTEGER_TWO, RoundingMode.HALF_EVEN);
+        return toScaledBigDecimal(value, 2, RoundingMode.HALF_EVEN);
     }
 
     /**
-     * Convert a {@code String} to a {@code BigDecimal} whose scale is the
-     * specified value with a {@code RoundingMode} applied. If the input {@code value}
-     * is {@code null}, we simply return {@code BigDecimal.ZERO}.
+     * Converts a {@code String} to a {@code BigDecimal} whose scale is the
+     * specified value with a {@code RoundingMode} applied. If the input value
+     * is {@code null}, returns {@code BigDecimal.ZERO}.
      *
-     * @param value the {@code String} to convert, may be null.
-     * @param scale the number of digits to the right of the decimal point.
-     * @param roundingMode a rounding behavior for numerical operations capable of
-     *  discarding precision.
-     * @return the scaled, with appropriate rounding, {@code BigDecimal}.
+     * @param value  the {@code String} to convert, may be null
+     * @param scale  the number of digits to the right of the decimal point
+     * @param roundingMode  a rounding behavior for numerical operations capable of
+     *  discarding precision
+     * @return the scaled, with appropriate rounding, {@code BigDecimal}
      */
     public static BigDecimal toScaledBigDecimal(final String value, final int scale, final RoundingMode roundingMode) {
         if (value == null) {
@@ -811,6 +846,12 @@ public final class NumberUtil {
         );
     }
 
+    /**
+     * Attempts to parse the input string as a {@code Double}.
+     *
+     * @param input  the string to parse
+     * @return the parsed {@code Double}, or {@code null} if parsing fails
+     */
     public static Double tryParseDouble(String input) {
         if (FLOATING_POINT_PATTERN.matcher(input).matches()) {
             try {
@@ -821,6 +862,12 @@ public final class NumberUtil {
         return null;
     }
 
+    /**
+     * Attempts to parse the input string as a {@code Float}.
+     *
+     * @param input  the string to parse
+     * @return the parsed {@code Float}, or {@code null} if parsing fails
+     */
     public static Float tryParseFloat(String input) {
         if (FLOATING_POINT_PATTERN.matcher(input).matches()) {
             try {
@@ -831,10 +878,23 @@ public final class NumberUtil {
         return null;
     }
 
+    /**
+     * Attempts to parse the input string as an {@code Integer} in base 10.
+     *
+     * @param input  the string to parse
+     * @return the parsed {@code Integer}, or {@code null} if parsing fails
+     */
     public static Integer tryParseInt(String input) {
         return tryParseInt(input, 10);
     }
 
+    /**
+     * Attempts to parse the input string as an {@code Integer} in the given radix.
+     *
+     * @param input  the string to parse
+     * @param radix  the radix to use for parsing
+     * @return the parsed {@code Integer}, or {@code null} if parsing fails
+     */
     public static Integer tryParseInt(String input, int radix) {
         try {
             return Integer.parseInt(input, radix);
@@ -843,10 +903,23 @@ public final class NumberUtil {
         return null;
     }
 
+    /**
+     * Attempts to parse the input string as a {@code Long} in base 10.
+     *
+     * @param input  the string to parse
+     * @return the parsed {@code Long}, or {@code null} if parsing fails
+     */
     public static Long tryParseLong(String input) {
         return tryParseLong(input, 10);
     }
 
+    /**
+     * Attempts to parse the input string as a {@code Long} in the given radix.
+     *
+     * @param input  the string to parse
+     * @param radix  the radix to use for parsing
+     * @return the parsed {@code Long}, or {@code null} if parsing fails
+     */
     public static Long tryParseLong(String input, int radix) {
         try {
             return Long.parseLong(input, radix);
@@ -855,10 +928,23 @@ public final class NumberUtil {
         return null;
     }
 
+    /**
+     * Attempts to parse the input string as a {@code Short} in base 10.
+     *
+     * @param input  the string to parse
+     * @return the parsed {@code Short}, or {@code null} if parsing fails
+     */
     public static Short tryParseShort(String input) {
         return tryParseShort(input, 10);
     }
 
+    /**
+     * Attempts to parse the input string as a {@code Short} in the given radix.
+     *
+     * @param input  the string to parse
+     * @param radix  the radix to use for parsing
+     * @return the parsed {@code Short}, or {@code null} if parsing fails
+     */
     public static Short tryParseShort(String input, int radix) {
         try {
             return Short.parseShort(input, radix);
@@ -867,71 +953,37 @@ public final class NumberUtil {
         return null;
     }
 
-    //-----------------------------------------------------------------------
-    // must handle Long, Float, Integer, Float, Short,
-    //                  BigDecimal, BigInteger and Byte
-    // useful methods:
-    // Byte.decode(String)
-    // Byte.valueOf(String, int radix)
-    // Byte.valueOf(String)
-    // Double.valueOf(String)
-    // Float.valueOf(String)
-    // Float.valueOf(String)
-    // Integer.valueOf(String, int radix)
-    // Integer.valueOf(String)
-    // Integer.decode(String)
-    // Integer.getInteger(String)
-    // Integer.getInteger(String, int val)
-    // Integer.getInteger(String, Integer val)
-    // Integer.valueOf(String)
-    // Double.valueOf(String)
-    // new Byte(String)
-    // Long.valueOf(String)
-    // Long.getLong(String)
-    // Long.getLong(String, int)
-    // Long.getLong(String, Integer)
-    // Long.valueOf(String, int)
-    // Long.valueOf(String)
-    // Short.valueOf(String)
-    // Short.decode(String)
-    // Short.valueOf(String, int)
-    // Short.valueOf(String)
-    // new BigDecimal(String)
-    // new BigInteger(String)
-    // new BigInteger(String, int radix)
-    // Possible inputs:
-    // 45 45.5 45E7 4.5E7 Hex Oct Binary xxxF xxxD xxxf xxxd
-    // plus minus everything. Prolly more. A lot are not separable.
-
     /**
-     * <p>Turns a string value into a java.lang.Number.</p>
-     *
-     * <p>If the string starts with {@code 0x} or {@code -0x} (lower or upper case) or {@code #} or {@code -#}, it
-     * will be interpreted as a hexadecimal Integer - or Long, if the number of digits after the
-     * prefix is more than 8 - or BigInteger if there are more than 16 digits.
-     * </p>
-     * <p>Then, the value is examined for a type qualifier on the end, i.e. one of
-     * {@code 'f', 'F', 'd', 'D', 'l', 'L'}.  If it is found, it starts
-     * trying to create successively larger types from the type specified
-     * until one is found that can represent the value.</p>
-     *
-     * <p>If a type specifier is not found, it will check for a decimal point
-     * and then try successively larger types from {@code Integer} to
-     * {@code BigInteger} and from {@code Float} to
-     * {@code BigDecimal}.</p>
+     * Converts a string value into a {@link Number}.
      *
      * <p>
-     * Integral values with a leading {@code 0} will be interpreted as octal; the returned number will
-     * be Integer, Long or BigDecimal as appropriate.
-     * </p>
+     * If the string starts with {@code 0x} or {@code -0x} (lower or upper case)
+     * or {@code #} or {@code -#}, it will be interpreted as a hexadecimal
+     * Integer - or Long, if the number of digits after the prefix is more than
+     * 8 - or BigInteger if there are more than 16 digits.
      *
-     * <p>Returns {@code null} if the string is {@code null}.</p>
+     * <p>
+     * Then, the value is examined for a type qualifier on the end, i.e. one of
+     * {@code 'f', 'F', 'd', 'D', 'l', 'L'}. If it is found, it starts
+     * trying to create successively larger types from the type specified
+     * until one is found that can represent the value.
      *
-     * <p>This method does not trim the input string, i.e., strings with leading
-     * or trailing spaces will generate NumberFormatExceptions.</p>
+     * <p>
+     * If a type specifier is not found, it will check for a decimal point
+     * and then try successively larger types from {@code Integer} to
+     * {@code BigInteger} and from {@code Float} to {@code BigDecimal}.
      *
-     * @param str  String containing a number, may be null
-     * @return Number created from the string (or null if the input is null)
+     * <p>
+     * Integral values with a leading {@code 0} will be interpreted as octal;
+     * the returned number will be Integer, Long or BigDecimal as appropriate.
+     *
+     * <p>
+     * Returns {@code null} if the string is {@code null}. This method does
+     * not trim the input string, i.e., strings with leading or trailing spaces
+     * will generate NumberFormatExceptions.
+     *
+     * @param str  the string containing a number, may be null
+     * @return the number created from the string, or null if the input is null
      * @throws NumberFormatException if the value cannot be converted
      */
     public static Number createNumber(final String str) {
@@ -1104,25 +1156,23 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Utility method for {@link #createNumber(java.lang.String)}.</p>
+     * Returns the mantissa of the given number string.
      *
-     * <p>Returns mantissa of the given number.</p>
-     *
-     * @param str the string representation of the number
-     * @return mantissa of the given number
+     * @param str  the string representation of the number
+     * @return the mantissa portion of the number
+     * @see #createNumber(String)
      */
     private static String getMantissa(final String str) {
         return getMantissa(str, str.length());
     }
 
     /**
-     * <p>Utility method for {@link #createNumber(java.lang.String)}.</p>
+     * Returns the mantissa of the given number string up to the specified stop position.
      *
-     * <p>Returns mantissa of the given number.</p>
-     *
-     * @param str the string representation of the number
-     * @param stopPos the position of the exponent or decimal point
-     * @return mantissa of the given number
+     * @param str  the string representation of the number
+     * @param stopPos  the position of the exponent or decimal point
+     * @return the mantissa portion of the number
+     * @see #createNumber(String)
      */
     private static String getMantissa(final String str, final int stopPos) {
         final char firstChar = str.charAt(0);
@@ -1132,12 +1182,11 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Utility method for {@link #createNumber(java.lang.String)}.</p>
+     * Checks whether the string contains only zero characters, or is {@code null}.
      *
-     * <p>Returns {@code true} if s is {@code null}.</p>
-     *
-     * @param str  the String to check
-     * @return if it is all zeros or {@code null}
+     * @param str  the string to check
+     * @return {@code true} if the string is null or contains only zeros
+     * @see #createNumber(String)
      */
     private static boolean isAllZeros(final String str) {
         if (str == null) {
@@ -1151,14 +1200,12 @@ public final class NumberUtil {
         return !str.isEmpty();
     }
 
-    //-----------------------------------------------------------------------
     /**
-     * <p>Convert a {@code String} to a {@code Float}.</p>
-     *
-     * <p>Returns {@code null} if the string is {@code null}.</p>
+     * Converts a {@code String} to a {@code Float}.
+     * Returns {@code null} if the string is {@code null}.
      *
      * @param str  a {@code String} to convert, may be null
-     * @return converted {@code Float} (or null if the input is null)
+     * @return converted {@code Float}, or null if the input is null
      * @throws NumberFormatException if the value cannot be converted
      */
     public static Float createFloat(final String str) {
@@ -1169,12 +1216,11 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Convert a {@code String} to a {@code Double}.</p>
-     *
-     * <p>Returns {@code null} if the string is {@code null}.</p>
+     * Converts a {@code String} to a {@code Double}.
+     * Returns {@code null} if the string is {@code null}.
      *
      * @param str  a {@code String} to convert, may be null
-     * @return converted {@code Double} (or null if the input is null)
+     * @return converted {@code Double}, or null if the input is null
      * @throws NumberFormatException if the value cannot be converted
      */
     public static Double createDouble(final String str) {
@@ -1185,14 +1231,13 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Convert a {@code String} to a {@code Integer}, handling
-     * hex (0xhhhh) and octal (0dddd) notations.
-     * N.B. a leading zero means octal; spaces are not trimmed.</p>
-     *
-     * <p>Returns {@code null} if the string is {@code null}.</p>
+     * Converts a {@code String} to an {@code Integer}, handling hex
+     * ({@code 0xhhhh}) and octal ({@code 0dddd}) notations. A leading zero
+     * means octal; spaces are not trimmed. Returns {@code null} if the
+     * string is {@code null}.
      *
      * @param str  a {@code String} to convert, may be null
-     * @return converted {@code Integer} (or null if the input is null)
+     * @return converted {@code Integer}, or null if the input is null
      * @throws NumberFormatException if the value cannot be converted
      */
     public static Integer createInteger(final String str) {
@@ -1204,14 +1249,13 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Convert a {@code String} to a {@code Long};
-     * since 3.1 it handles hex (0Xhhhh) and octal (0ddd) notations.
-     * N.B. a leading zero means octal; spaces are not trimmed.</p>
-     *
-     * <p>Returns {@code null} if the string is {@code null}.</p>
+     * Converts a {@code String} to a {@code Long}, handling hex
+     * ({@code 0Xhhhh}) and octal ({@code 0ddd}) notations. A leading zero
+     * means octal; spaces are not trimmed. Returns {@code null} if the
+     * string is {@code null}.
      *
      * @param str  a {@code String} to convert, may be null
-     * @return converted {@code Long} (or null if the input is null)
+     * @return converted {@code Long}, or null if the input is null
      * @throws NumberFormatException if the value cannot be converted
      */
     public static Long createLong(final String str) {
@@ -1222,13 +1266,12 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Convert a {@code String} to a {@code BigInteger};
-     * since 3.2 it handles hex (0x or #) and octal (0) notations.</p>
-     *
-     * <p>Returns {@code null} if the string is {@code null}.</p>
+     * Converts a {@code String} to a {@code BigInteger}, handling hex
+     * ({@code 0x} or {@code #}) and octal ({@code 0}) notations. Returns
+     * {@code null} if the string is {@code null}.
      *
      * @param str  a {@code String} to convert, may be null
-     * @return converted {@code BigInteger} (or null if the input is null)
+     * @return converted {@code BigInteger}, or null if the input is null
      * @throws NumberFormatException if the value cannot be converted
      */
     public static BigInteger createBigInteger(final String str) {
@@ -1258,34 +1301,29 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Convert a {@code String} to a {@code BigDecimal}.</p>
-     *
-     * <p>Returns {@code null} if the string is {@code null}.</p>
+     * Converts a {@code String} to a {@code BigDecimal}. Returns
+     * {@code null} if the string is {@code null}.
      *
      * @param str  a {@code String} to convert, may be null
-     * @return converted {@code BigDecimal} (or null if the input is null)
+     * @return converted {@code BigDecimal}, or null if the input is null
      * @throws NumberFormatException if the value cannot be converted
      */
     public static BigDecimal createBigDecimal(final String str) {
         if (str == null) {
             return null;
         }
-        // handle JDK1.3.1 bug where "" throws IndexOutOfBoundsException
         if (StringUtil.isBlank(str)) {
             throw new NumberFormatException("A blank string is not a valid number");
         }
         return new BigDecimal(str);
     }
 
-    // Min in array
-    //--------------------------------------------------------------------
     /**
-     * <p>Returns the minimum value in an array.</p>
+     * Returns the minimum value in an array.
      *
      * @param array  an array, must not be null or empty
      * @return the minimum value in the array
-     * @throws IllegalArgumentException if {@code array} is {@code null}
-     * @throws IllegalArgumentException if {@code array} is empty Changed signature from min(long[]) to min(long...)
+     * @throws IllegalArgumentException if {@code array} is null or empty
      */
     public static long min(final long... array) {
         // Validates input
@@ -1303,12 +1341,11 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Returns the minimum value in an array.</p>
+     * Returns the minimum value in an array.
      *
      * @param array  an array, must not be null or empty
      * @return the minimum value in the array
-     * @throws IllegalArgumentException if {@code array} is {@code null}
-     * @throws IllegalArgumentException if {@code array} is empty Changed signature from min(int[]) to min(int...)
+     * @throws IllegalArgumentException if {@code array} is null or empty
      */
     public static int min(final int... array) {
         // Validates input
@@ -1326,12 +1363,11 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Returns the minimum value in an array.</p>
+     * Returns the minimum value in an array.
      *
      * @param array  an array, must not be null or empty
      * @return the minimum value in the array
-     * @throws IllegalArgumentException if {@code array} is {@code null}
-     * @throws IllegalArgumentException if {@code array} is empty Changed signature from min(short[]) to min(short...)
+     * @throws IllegalArgumentException if {@code array} is null or empty
      */
     public static short min(final short... array) {
         // Validates input
@@ -1349,12 +1385,11 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Returns the minimum value in an array.</p>
+     * Returns the minimum value in an array.
      *
      * @param array  an array, must not be null or empty
      * @return the minimum value in the array
-     * @throws IllegalArgumentException if {@code array} is {@code null}
-     * @throws IllegalArgumentException if {@code array} is empty Changed signature from min(byte[]) to min(byte...)
+     * @throws IllegalArgumentException if {@code array} is null or empty
      */
     public static byte min(final byte... array) {
         // Validates input
@@ -1372,12 +1407,11 @@ public final class NumberUtil {
     }
 
     /**
-     * <p>Returns the minimum value in an array.</p>
+     * Returns the minimum value in an array.
      *
      * @param array  an array, must not be null or empty
      * @return the minimum value in the array
-     * @throws IllegalArgumentException if {@code array} is {@code null}
-     * @throws IllegalArgumentException if {@code array} is empty
+     * @throws IllegalArgumentException if {@code array} is null or empty
      */
     public static double min(final double... array) {
         // Validates input
