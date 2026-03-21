@@ -2,6 +2,7 @@ package dev.sbs.api.util;
 
 import dev.sbs.api.reflection.Reflection;
 import lombok.experimental.UtilityClass;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
@@ -1023,8 +1024,8 @@ public final class NumberUtil {
         }
         final char lastChar = str.charAt(str.length() - 1);
         String mant;
-        String dec;
-        String exp;
+        @Nullable String dec;
+        @Nullable String exp;
         final int decPos = str.indexOf('.');
         final int expPos = str.indexOf('e') + str.indexOf('E') + 1; // assumes both not present
         // if both e and E are present, this is caught by the checks on expPos (which prevent IOOBE)
