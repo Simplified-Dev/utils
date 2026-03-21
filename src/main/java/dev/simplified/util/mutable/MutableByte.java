@@ -284,7 +284,7 @@ public class MutableByte extends Number implements Comparable<MutableByte>, Muta
      */
     @Override
     public int hashCode() {
-        return value;
+        return Byte.hashCode(value);
     }
 
     /**

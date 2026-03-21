@@ -340,7 +340,7 @@ public class MutableFloat extends Number implements Comparable<MutableFloat>, Mu
      */
     @Override
     public int hashCode() {
-        return Float.floatToIntBits(value);
+        return Float.hashCode(value);
     }
 
     //-----------------------------------------------------------------------

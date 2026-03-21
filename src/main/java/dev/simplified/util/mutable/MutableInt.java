@@ -277,7 +277,7 @@ public class MutableInt extends Number implements Comparable<MutableInt>, Mutabl
      */
     @Override
     public int hashCode() {
-        return value;
+        return Integer.hashCode(value);
     }
 
     /**

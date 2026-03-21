@@ -283,7 +283,7 @@ public class MutableShort extends Number implements Comparable<MutableShort>, Mu
      */
     @Override
     public int hashCode() {
-        return value;
+        return Short.hashCode(value);
     }
 
     /**
