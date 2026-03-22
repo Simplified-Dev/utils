@@ -20,11 +20,7 @@ import java.util.Objects;
  */
 public interface Mutable<T> {
 
-    /**
-     * Returns the value of this mutable.
-     *
-     * @return the stored value
-     */
+    /** The stored value of this mutable. */
     T get();
 
     /**

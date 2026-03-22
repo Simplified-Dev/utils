@@ -57,7 +57,7 @@ public final class Stopwatch {
      * Creates a stopwatch from two pre-existing instants, computing the duration
      * as the difference between them.
      *
-     * @param startedAt   the instant the operation started
+     * @param startedAt the instant the operation started
      * @param completedAt the instant the operation completed
      * @return a completed stopwatch
      */

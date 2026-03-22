@@ -156,7 +156,7 @@ public class MutableFloat extends Number implements Comparable<MutableFloat>, Mu
     /**
      * Adds a value to the value of this instance.
      *
-     * @param operand  the value to add, not null
+     * @param operand the value to add, not null
      */
     public void add(final float operand) {
         this.value += operand;
@@ -165,7 +165,7 @@ public class MutableFloat extends Number implements Comparable<MutableFloat>, Mu
     /**
      * Adds a value to the value of this instance.
      *
-     * @param operand  the value to add, not null
+     * @param operand the value to add, not null
      * @throws NullPointerException if the object is null
      */
     public void add(final Number operand) {
@@ -175,7 +175,7 @@ public class MutableFloat extends Number implements Comparable<MutableFloat>, Mu
     /**
      * Subtracts a value from the value of this instance.
      *
-     * @param operand  the value to subtract
+     * @param operand the value to subtract
      */
     public void subtract(final float operand) {
         this.value -= operand;
@@ -184,7 +184,7 @@ public class MutableFloat extends Number implements Comparable<MutableFloat>, Mu
     /**
      * Subtracts a value from the value of this instance.
      *
-     * @param operand  the value to subtract, not null
+     * @param operand the value to subtract, not null
      * @throws NullPointerException if the object is null
      */
     public void subtract(final Number operand) {
@@ -323,7 +323,7 @@ public class MutableFloat extends Number implements Comparable<MutableFloat>, Mu
      * </ul>
      * This definition allows hashtables to operate properly.
      *
-     * @param obj  the object to compare with, null returns false
+     * @param obj the object to compare with, null returns false
      * @return {@code true} if the objects are the same; {@code false} otherwise.
      * @see Float#floatToIntBits(float)
      */
@@ -347,7 +347,7 @@ public class MutableFloat extends Number implements Comparable<MutableFloat>, Mu
     /**
      * Compares this mutable to another in ascending order.
      *
-     * @param other  the other mutable to compare to, not null
+     * @param other the other mutable to compare to, not null
      * @return negative if this is less, zero if equal, positive if greater
      */
     @Override

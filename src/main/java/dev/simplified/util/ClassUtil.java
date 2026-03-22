@@ -48,8 +48,8 @@ public final class ClassUtil {
     /**
      * Returns the class name minus the package name for an {@code Object}.
      *
-     * @param object  the class to get the short name for, may be null
-     * @param valueIfNull  the value to return if null
+     * @param object the class to get the short name for, may be null
+     * @param valueIfNull the value to return if null
      * @return the class name of the object without the package name, or the null value
      */
     public static String getShortClassName(Object object, String valueIfNull) {
@@ -67,7 +67,7 @@ public final class ClassUtil {
      * difference is that this method will return {@code "Map.Entry"} while
      * the {@code java.lang.Class} variant will simply return {@code "Entry"}.
      *
-     * @param cls  the class to get the short name for
+     * @param cls the class to get the short name for
      * @return the class name without the package name or an empty string
      */
     public static String getShortClassName(Class<?> cls) {
@@ -88,7 +88,7 @@ public final class ClassUtil {
      * return {@code "Map.Entry"} whilst the {@code java.lang.Class} variant will simply
      * return {@code "Entry"}.
      *
-     * @param className  the className to get the short name for
+     * @param className the className to get the short name for
      * @return the class name of the class without the package name or an empty string
      */
     public static String getShortClassName(String className) {
@@ -129,7 +129,7 @@ public final class ClassUtil {
      * Returns the simple name of a {@code Class} as would be returned by {@link Class#getSimpleName()},
      * or an empty string if the class is {@code null}.
      *
-     * @param cls  the class for which to get the simple name
+     * @param cls the class for which to get the simple name
      * @return the simple class name
      * @see Class#getSimpleName()
      */
@@ -144,8 +144,8 @@ public final class ClassUtil {
      * Returns the simple name of an object's {@code Class} as would be returned by
      * {@link Class#getSimpleName()}, or the given default value if the object is {@code null}.
      *
-     * @param object  the object for which to get the simple class name
-     * @param valueIfNull  the value to return if {@code object} is {@code null}
+     * @param object the object for which to get the simple class name
+     * @param valueIfNull the value to return if {@code object} is {@code null}
      * @return the simple class name
      * @see Class#getSimpleName()
      */
@@ -159,8 +159,8 @@ public final class ClassUtil {
     /**
      * Returns the package name of an {@code Object}.
      *
-     * @param object  the class to get the package name for, may be null
-     * @param valueIfNull  the value to return if null
+     * @param object the class to get the package name for, may be null
+     * @param valueIfNull the value to return if null
      * @return the package name of the object, or the null value
      */
     public static String getPackageName(Object object, String valueIfNull) {
@@ -173,7 +173,7 @@ public final class ClassUtil {
     /**
      * Returns the package name of a {@code Class}.
      *
-     * @param cls  the class to get the package name for, may be {@code null}
+     * @param cls the class to get the package name for, may be {@code null}
      * @return the package name or an empty string
      */
     public static String getPackageName(Class<?> cls) {
@@ -190,7 +190,7 @@ public final class ClassUtil {
      * The string passed in is assumed to be a class name - it is not checked.
      * If the class is unpackaged, returns an empty string.
      *
-     * @param className  the className to get the package name for, may be {@code null}
+     * @param className the className to get the package name for, may be {@code null}
      * @return the package name or an empty string
      */
     public static String getPackageName(String className) {
@@ -215,7 +215,7 @@ public final class ClassUtil {
     /**
      * Returns a {@code List} of superclasses for the given class.
      *
-     * @param cls  the class to look up, may be {@code null}
+     * @param cls the class to look up, may be {@code null}
      * @return the {@code List} of superclasses in order going up from this one,
      *  {@code null} if null input
      */
@@ -244,7 +244,7 @@ public final class ClassUtil {
      * superclass is considered in the same way. Later duplicates are ignored,
      * so the order is maintained.
      *
-     * @param cls  the class to look up, may be {@code null}
+     * @param cls the class to look up, may be {@code null}
      * @return the {@code List} of interfaces in order,
      *  {@code null} if null input
      */
@@ -261,8 +261,8 @@ public final class ClassUtil {
     /**
      * Collects the interfaces for the specified class into the given set.
      *
-     * @param cls  the class to look up, may be {@code null}
-     * @param interfacesFound  the {@code Set} of interfaces for the class
+     * @param cls the class to look up, may be {@code null}
+     * @param interfacesFound the {@code Set} of interfaces for the class
      */
     private static void getAllInterfaces(Class<?> cls, HashSet<Class<?>> interfacesFound) {
         while (cls != null) {
@@ -285,7 +285,7 @@ public final class ClassUtil {
      * is stored in the {@code List}. If the class name in the {@code List} is
      * {@code null}, {@code null} is stored in the output {@code List}.
      *
-     * @param classNames  the classNames to change
+     * @param classNames the classNames to change
      * @return a {@code List} of Class objects corresponding to the class names,
      *  {@code null} if null input
      * @throws ClassCastException if classNames contains a non String entry
@@ -314,7 +314,7 @@ public final class ClassUtil {
      * A new {@code List} is returned. {@code null} objects will be copied into
      * the returned list as {@code null}.
      *
-     * @param classes  the classes to change
+     * @param classes the classes to change
      * @return a {@code List} of class names corresponding to the Class objects,
      *  {@code null} if null input
      * @throws ClassCastException if {@code classes} contains a non-{@code Class} entry
@@ -371,8 +371,8 @@ public final class ClassUtil {
      * Autoboxing is used by default when calculating assignability between
      * primitive and wrapper types.
      *
-     * @param classArray  the array of Classes to check, may be {@code null}
-     * @param toClassArray  the array of Classes to try to assign into, may be {@code null}
+     * @param classArray the array of Classes to check, may be {@code null}
+     * @param toClassArray the array of Classes to try to assign into, may be {@code null}
      * @return {@code true} if assignment possible
      */
     public static boolean isAssignable(Class<?>[] classArray, Class<?>... toClassArray) {
@@ -411,9 +411,9 @@ public final class ClassUtil {
      * <em><a href="http://java.sun.com/docs/books/jls/">The Java Language Specification</a></em>,
      * sections 5.1.1, 5.1.2 and 5.1.4 for details.
      *
-     * @param classArray  the array of Classes to check, may be {@code null}
-     * @param toClassArray  the array of Classes to try to assign into, may be {@code null}
-     * @param autoboxing  whether to use implicit autoboxing/unboxing between primitives and wrappers
+     * @param classArray the array of Classes to check, may be {@code null}
+     * @param toClassArray the array of Classes to try to assign into, may be {@code null}
+     * @param autoboxing whether to use implicit autoboxing/unboxing between primitives and wrappers
      * @return {@code true} if assignment possible
      */
     public static boolean isAssignable(Class<?>[] classArray, Class<?>[] toClassArray, boolean autoboxing) {
@@ -463,8 +463,8 @@ public final class ClassUtil {
      * Autoboxing is used by default when calculating assignability between
      * primitive and wrapper types.
      *
-     * @param cls  the Class to check, may be null
-     * @param toClass  the Class to try to assign into, returns false if null
+     * @param cls the Class to check, may be null
+     * @param toClass the Class to try to assign into, returns false if null
      * @return {@code true} if assignment possible
      */
     public static boolean isAssignable(Class<?> cls, Class<?> toClass) {
@@ -496,9 +496,9 @@ public final class ClassUtil {
      * <em><a href="http://java.sun.com/docs/books/jls/">The Java Language Specification</a></em>,
      * sections 5.1.1, 5.1.2 and 5.1.4 for details.
      *
-     * @param cls  the Class to check, may be null
-     * @param toClass  the Class to try to assign into, returns false if null
-     * @param autoboxing  whether to use implicit autoboxing/unboxing between primitives and wrappers
+     * @param cls the Class to check, may be null
+     * @param toClass the Class to try to assign into, returns false if null
+     * @param autoboxing whether to use implicit autoboxing/unboxing between primitives and wrappers
      * @return {@code true} if assignment possible
      */
     public static boolean isAssignable(Class<?> cls, Class<?> toClass, boolean autoboxing) {
@@ -572,7 +572,7 @@ public final class ClassUtil {
     /**
      * Checks whether the specified class is an inner class or static nested class.
      *
-     * @param cls  the class to check, may be null
+     * @param cls the class to check, may be null
      * @return {@code true} if the class is an inner or static nested class,
      *  false if not or {@code null}
      */
@@ -628,8 +628,8 @@ public final class ClassUtil {
      * "{@code java.util.Map$Entry[]}", "{@code [Ljava.util.Map.Entry;}",
      * and "{@code [Ljava.util.Map$Entry;}".
      *
-     * @param classLoader  the class loader to use to load the class
-     * @param className  the class name
+     * @param classLoader the class loader to use to load the class
+     * @param className the class name
      * @return the class represented by {@code className} using the {@code classLoader}
      * @throws ClassNotFoundException if the class is not found
      */
@@ -644,7 +644,7 @@ public final class ClassUtil {
      * "{@code java.util.Map$Entry[]}", "{@code [Ljava.util.Map.Entry;}",
      * and "{@code [Ljava.util.Map$Entry;}".
      *
-     * @param className  the class name
+     * @param className the class name
      * @return the class represented by {@code className} using the current thread's context class loader
      * @throws ClassNotFoundException if the class is not found
      */
@@ -658,8 +658,8 @@ public final class ClassUtil {
      * syntaxes "{@code java.util.Map.Entry[]}", "{@code java.util.Map$Entry[]}",
      * "{@code [Ljava.util.Map.Entry;}", and "{@code [Ljava.util.Map$Entry;}".
      *
-     * @param className  the class name
-     * @param initialize  whether the class must be initialized
+     * @param className the class name
+     * @param initialize whether the class must be initialized
      * @return the class represented by {@code className} using the current thread's context class loader
      * @throws ClassNotFoundException if the class is not found
      */

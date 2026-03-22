@@ -63,7 +63,7 @@ public final class ExceptionUtil {
      * <p>
      * If none of the above is found, returns {@code null}.
      *
-     * @param throwable  the throwable to introspect for a cause, may be null
+     * @param throwable the throwable to introspect for a cause, may be null
      * @return the cause of the {@code Throwable}, {@code null} if none found or null throwable input
      * @see Throwable#getCause()
      */
@@ -79,8 +79,8 @@ public final class ExceptionUtil {
      * A {@code null} set of method names means use the default set.
      * A {@code null} in the set of method names will be ignored.
      *
-     * @param throwable  the throwable to introspect for a cause, may be null
-     * @param methodNames  the method names, null treated as default set
+     * @param throwable the throwable to introspect for a cause, may be null
+     * @param methodNames the method names, null treated as default set
      * @return the cause of the {@code Throwable}, {@code null} if none found or null throwable input
      * @see Throwable#getCause()
      */
@@ -114,8 +114,8 @@ public final class ExceptionUtil {
     /**
      * Finds a {@code Throwable} by method name.
      *
-     * @param throwable  the exception to examine
-     * @param methodName  the name of the method to find and invoke
+     * @param throwable the exception to examine
+     * @param methodName the name of the method to find and invoke
      * @return the wrapped exception, or {@code null} if not found
      */
     private static Throwable getCauseUsingMethodName(final Throwable throwable, final String methodName) {
@@ -157,7 +157,7 @@ public final class ExceptionUtil {
      * The message returned is of the form
      * {ClassNameWithoutPackage}: {ThrowableMessage}.
      *
-     * @param th  the throwable to get a message for, null returns empty string
+     * @param th the throwable to get a message for, null returns empty string
      * @return the message, non-null
      */
     public static String getMessage(final Throwable th) {
@@ -183,7 +183,7 @@ public final class ExceptionUtil {
      * then null will be returned. If the throwable parameter cause chain loops,
      * the last element in the chain before the loop is returned.
      *
-     * @param throwable  the throwable to get the root cause for, may be null
+     * @param throwable the throwable to get the root cause for, may be null
      * @return the root cause of the {@code Throwable}, {@code null} if null throwable input
      */
     public static Throwable getRootCause(final Throwable throwable) {
@@ -198,7 +198,7 @@ public final class ExceptionUtil {
      * The message returned is of the form
      * {ClassNameWithoutPackage}: {ThrowableMessage}.
      *
-     * @param th  the throwable to get a message for, null returns empty string
+     * @param th the throwable to get a message for, null returns empty string
      * @return the message, non-null
      */
     public static String getRootCauseMessage(final Throwable th) {
@@ -217,7 +217,7 @@ public final class ExceptionUtil {
      * exceptions separated by '[wrapped]'. Note that this is the opposite
      * order to the standard JDK display.
      *
-     * @param throwable  the throwable to examine, may be null
+     * @param throwable the throwable to examine, may be null
      * @return an array of stack trace frames, never null
      * @see #printRootCauseStackTrace(Throwable)
      */
@@ -255,7 +255,7 @@ public final class ExceptionUtil {
      * message contains a line that starts with:
      * {@code "&nbsp;&nbsp;&nbsp;at"}.
      *
-     * @param t  the throwable to extract frames from
+     * @param t the throwable to extract frames from
      * @return list of stack frames, never null
      */
     static List<String> getStackFrameList(final Throwable t) {
@@ -284,7 +284,7 @@ public final class ExceptionUtil {
      * <p>
      * The end of line is determined by the value of {@link System#lineSeparator()}.
      *
-     * @param stackTrace  a stack trace string
+     * @param stackTrace a stack trace string
      * @return an array where each element is a line from the argument, never null
      */
     static String[] getStackFrames(final String stackTrace) {
@@ -305,7 +305,7 @@ public final class ExceptionUtil {
      * The result of this method may vary by JDK version as this method
      * uses {@link Throwable#printStackTrace(java.io.PrintWriter)}.
      *
-     * @param throwable  the {@code Throwable} to examine, may be null
+     * @param throwable the {@code Throwable} to examine, may be null
      * @return an array of strings describing each stack frame, never null
      */
     public static String[] getStackFrames(final Throwable throwable) {
@@ -322,7 +322,7 @@ public final class ExceptionUtil {
      * The result of this method may vary by JDK version as this method
      * uses {@link Throwable#printStackTrace(java.io.PrintWriter)}.
      *
-     * @param throwable  the {@code Throwable} to be examined
+     * @param throwable the {@code Throwable} to be examined
      * @return the stack trace as generated by the exception's
      *  {@code printStackTrace(PrintWriter)} method
      */
@@ -347,7 +347,7 @@ public final class ExceptionUtil {
      * cause infinite loops. The cause chain is processed until the end is
      * reached, or until the next item in the chain is already in the result set.
      *
-     * @param throwable  the throwable to inspect, may be null
+     * @param throwable the throwable to inspect, may be null
      * @return the count of throwables, zero if null input
      */
     public static int getThrowableCount(final Throwable throwable) {
@@ -371,7 +371,7 @@ public final class ExceptionUtil {
      * the end is reached, or until the next item in the chain is already
      * in the result set.
      *
-     * @param throwable  the throwable to inspect, may be null
+     * @param throwable the throwable to inspect, may be null
      * @return the list of throwables, never null
      */
     public static List<Throwable> getThrowableList(Throwable throwable) {
@@ -400,7 +400,7 @@ public final class ExceptionUtil {
      * the end is reached, or until the next item in the chain is already
      * in the result set.
      *
-     * @param throwable  the throwable to inspect, may be null
+     * @param throwable the throwable to inspect, may be null
      * @return the array of throwables, never null
      * @see #getThrowableList(Throwable)
      */
@@ -413,8 +413,8 @@ public final class ExceptionUtil {
      * Checks whether the throwable's causal chain has an immediate or wrapped exception
      * of the given type.
      *
-     * @param chain  the root of a throwable causal chain
-     * @param type  the exception type to test
+     * @param chain the root of a throwable causal chain
+     * @param type the exception type to test
      * @return {@code true} if chain is an instance of type or is an
      *  {@link UndeclaredThrowableException} wrapping a cause
      * @see #wrapAndThrow(Throwable)
@@ -430,11 +430,11 @@ public final class ExceptionUtil {
     /**
      * Searches for a matching throwable type in the exception chain starting from a given index.
      *
-     * @param throwable  the throwable to inspect, may be null
-     * @param type  the type to search for, subclasses match, null returns -1
-     * @param fromIndex  the (zero-based) index of the starting position,
+     * @param throwable the throwable to inspect, may be null
+     * @param type the type to search for, subclasses match, null returns -1
+     * @param fromIndex the (zero-based) index of the starting position,
      *  negative treated as zero, larger than chain size returns -1
-     * @param subclass  if {@code true}, compares with {@link Class#isAssignableFrom(Class)},
+     * @param subclass if {@code true}, compares with {@link Class#isAssignableFrom(Class)},
      *  otherwise compares using references
      * @return index of the {@code type} within throwables nested within the specified {@code throwable}
      */
@@ -476,8 +476,8 @@ public final class ExceptionUtil {
      * A {@code null} type returns {@code -1}.
      * No match in the chain returns {@code -1}.
      *
-     * @param throwable  the throwable to inspect, may be null
-     * @param clazz  the class to search for, subclasses do not match, null returns -1
+     * @param throwable the throwable to inspect, may be null
+     * @param clazz the class to search for, subclasses do not match, null returns -1
      * @return the index into the throwable chain, -1 if no match or null input
      */
     public static int indexOfThrowable(final Throwable throwable, final Class<? extends Throwable> clazz) {
@@ -498,9 +498,9 @@ public final class ExceptionUtil {
      * A negative start index is treated as zero.
      * A start index greater than the number of throwables returns {@code -1}.
      *
-     * @param throwable  the throwable to inspect, may be null
-     * @param clazz  the class to search for, subclasses do not match, null returns -1
-     * @param fromIndex  the (zero-based) index of the starting position,
+     * @param throwable the throwable to inspect, may be null
+     * @param clazz the class to search for, subclasses do not match, null returns -1
+     * @param fromIndex the (zero-based) index of the starting position,
      *  negative treated as zero, larger than chain size returns -1
      * @return the index into the throwable chain, -1 if no match or null input
      */
@@ -519,8 +519,8 @@ public final class ExceptionUtil {
      * A {@code null} type returns {@code -1}.
      * No match in the chain returns {@code -1}.
      *
-     * @param throwable  the throwable to inspect, may be null
-     * @param type  the type to search for, subclasses match, null returns -1
+     * @param throwable the throwable to inspect, may be null
+     * @param type the type to search for, subclasses match, null returns -1
      * @return the index into the throwable chain, -1 if no match or null input
      */
     public static int indexOfType(final Throwable throwable, final Class<? extends Throwable> type) {
@@ -541,9 +541,9 @@ public final class ExceptionUtil {
      * A negative start index is treated as zero.
      * A start index greater than the number of throwables returns {@code -1}.
      *
-     * @param throwable  the throwable to inspect, may be null
-     * @param type  the type to search for, subclasses match, null returns -1
-     * @param fromIndex  the (zero-based) index of the starting position,
+     * @param throwable the throwable to inspect, may be null
+     * @param type the type to search for, subclasses match, null returns -1
+     * @param fromIndex the (zero-based) index of the starting position,
      *  negative treated as zero, larger than chain size returns -1
      * @return the index into the throwable chain, -1 if no match or null input
      */
@@ -569,7 +569,7 @@ public final class ExceptionUtil {
      * The method is equivalent to {@code printStackTrace} for throwables
      * that don't have nested causes.
      *
-     * @param throwable  the throwable to output
+     * @param throwable the throwable to output
      */
     public static void printRootCauseStackTrace(final Throwable throwable) {
         printRootCauseStackTrace(throwable, System.err);
@@ -592,8 +592,8 @@ public final class ExceptionUtil {
      * The method is equivalent to {@code printStackTrace} for throwables
      * that don't have nested causes.
      *
-     * @param throwable  the throwable to output, may be null
-     * @param printStream  the stream to output to, may not be null
+     * @param throwable the throwable to output, may be null
+     * @param printStream the stream to output to, may not be null
      * @throws NullPointerException if the printStream is {@code null}
      */
     public static void printRootCauseStackTrace(final Throwable throwable, final PrintStream printStream) {
@@ -625,8 +625,8 @@ public final class ExceptionUtil {
      * The method is equivalent to {@code printStackTrace} for throwables
      * that don't have nested causes.
      *
-     * @param throwable  the throwable to output, may be null
-     * @param printWriter  the writer to output to, may not be null
+     * @param throwable the throwable to output, may be null
+     * @param printWriter the writer to output to, may not be null
      * @throws NullPointerException if the printWriter is {@code null}
      */
     public static void printRootCauseStackTrace(final Throwable throwable, final PrintWriter printWriter) {
@@ -644,8 +644,8 @@ public final class ExceptionUtil {
     /**
      * Removes common frames from the cause trace given the two stack traces.
      *
-     * @param causeFrames  stack trace of a cause throwable
-     * @param wrapperFrames  stack trace of a wrapper throwable
+     * @param causeFrames stack trace of a cause throwable
+     * @param wrapperFrames stack trace of a wrapper throwable
      * @throws IllegalArgumentException if either argument is null
      */
     public static void removeCommonFrames(final List<String> causeFrames, final List<String> wrapperFrames) {
@@ -712,7 +712,7 @@ public final class ExceptionUtil {
      * code through a method re-declaring the desired checked exception, or
      * catch Exception and use the instanceof operator.
      *
-     * @param throwable  the throwable to rethrow
+     * @param throwable the throwable to rethrow
      * @param <R>  the type of the returned value
      * @return never actually returned, this generic type matches any type
      *  which the calling site requires
@@ -727,11 +727,11 @@ public final class ExceptionUtil {
      * Searches for a throwable of the given type in the exception chain starting from a given index.
      *
      * @param <T>  the type of throwable to search for
-     * @param throwable  the throwable to inspect, may be null
-     * @param type  the type to search for, subclasses match, null returns null
-     * @param fromIndex  the (zero-based) index of the starting position,
+     * @param throwable the throwable to inspect, may be null
+     * @param type the type to search for, subclasses match, null returns null
+     * @param fromIndex the (zero-based) index of the starting position,
      *  negative treated as zero, larger than chain size returns null
-     * @param subclass  if {@code true}, compares with {@link Class#isAssignableFrom(Class)},
+     * @param subclass if {@code true}, compares with {@link Class#isAssignableFrom(Class)},
      *  otherwise compares using references
      * @return throwable of the {@code type} within the specified {@code throwable} chain, or null
      */
@@ -773,8 +773,8 @@ public final class ExceptionUtil {
      * No match in the chain returns {@code null}.
      *
      * @param <T>  the type of throwable to search for
-     * @param throwable  the throwable to inspect, may be null
-     * @param clazz  the class to search for, subclasses do not match, null returns null
+     * @param throwable the throwable to inspect, may be null
+     * @param clazz the class to search for, subclasses do not match, null returns null
      * @return the first matching throwable from the throwable chain, null if no match or null input
      */
     public static <T extends Throwable> T throwableOfThrowable(final Throwable throwable, final Class<T> clazz) {
@@ -795,9 +795,9 @@ public final class ExceptionUtil {
      * A start index greater than the number of throwables returns {@code null}.
      *
      * @param <T>  the type of throwable to search for
-     * @param throwable  the throwable to inspect, may be null
-     * @param clazz  the class to search for, subclasses do not match, null returns null
-     * @param fromIndex  the (zero-based) index of the starting position,
+     * @param throwable the throwable to inspect, may be null
+     * @param clazz the class to search for, subclasses do not match, null returns null
+     * @param fromIndex the (zero-based) index of the starting position,
      *  negative treated as zero, larger than chain size returns null
      * @return the first matching throwable from the throwable chain, null if no match or null input
      */
@@ -816,8 +816,8 @@ public final class ExceptionUtil {
      * No match in the chain returns {@code null}.
      *
      * @param <T>  the type of throwable to search for
-     * @param throwable  the throwable to inspect, may be null
-     * @param type  the type to search for, subclasses match, null returns null
+     * @param throwable the throwable to inspect, may be null
+     * @param type the type to search for, subclasses match, null returns null
      * @return the first matching throwable from the throwable chain, null if no match or null input
      */
     public static <T extends Throwable> T throwableOfType(final Throwable throwable, final Class<T> type) {
@@ -838,9 +838,9 @@ public final class ExceptionUtil {
      * A start index greater than the number of throwables returns {@code null}.
      *
      * @param <T>  the type of throwable to search for
-     * @param throwable  the throwable to inspect, may be null
-     * @param type  the type to search for, subclasses match, null returns null
-     * @param fromIndex  the (zero-based) index of the starting position,
+     * @param throwable the throwable to inspect, may be null
+     * @param type the type to search for, subclasses match, null returns null
+     * @param fromIndex the (zero-based) index of the starting position,
      *  negative treated as zero, larger than chain size returns null
      * @return the first matching throwable from the throwable chain, null if no match or null input
      */
@@ -854,7 +854,7 @@ public final class ExceptionUtil {
      *
      * @param <R>  the nominal return type
      * @param <T>  the throwable type to masquerade as
-     * @param throwable  the throwable to throw
+     * @param throwable the throwable to throw
      * @return never returns; always throws
      * @throws T  always
      */
@@ -875,7 +875,7 @@ public final class ExceptionUtil {
      * handle specific checked exceptions must sniff up the exception chain to
      * determine if the caught exception was caused by the checked exception.
      *
-     * @param throwable  the throwable to rethrow
+     * @param throwable the throwable to rethrow
      * @param <R>  the type of the returned value
      * @return never actually returned, this generic type matches any type
      *  which the calling site requires

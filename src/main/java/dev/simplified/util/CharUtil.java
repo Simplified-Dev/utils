@@ -78,7 +78,7 @@ public final class CharUtil {
      *   CharUtil.toChar('A', 'X')  = 'A'
      * </pre>
      *
-     * @param ch           the character to convert
+     * @param ch the character to convert
      * @param defaultValue the value to use if the character is null
      * @return the char value of the character, or the default if null
      */
@@ -120,7 +120,7 @@ public final class CharUtil {
      *   CharUtil.toChar("BA", 'X') = 'B'
      * </pre>
      *
-     * @param str          the string to convert
+     * @param str the string to convert
      * @param defaultValue the value to use if the string is null or empty
      * @return the char value of the first letter of the string, or the default if null or empty
      */
@@ -164,7 +164,7 @@ public final class CharUtil {
      *   CharUtil.toIntValue('A', -1)  = -1
      * </pre>
      *
-     * @param ch           the character to convert
+     * @param ch the character to convert
      * @param defaultValue the default value to use if the character is not numeric
      * @return the int value of the character, or the default if not numeric
      */
@@ -208,7 +208,7 @@ public final class CharUtil {
      *   CharUtil.toIntValue('A', -1)  = -1
      * </pre>
      *
-     * @param ch           the character to convert
+     * @param ch the character to convert
      * @param defaultValue the default value to use if the character is null or not numeric
      * @return the int value of the character, or the default if null or not numeric
      */
