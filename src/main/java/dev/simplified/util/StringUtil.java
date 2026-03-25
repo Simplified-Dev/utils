@@ -473,7 +473,7 @@ public final class StringUtil {
      * @see #capitalizeFully(String)
      */
     public static String capitalize(final String str) {
-        return capitalize(str, (Character) null);
+        return capitalize(str, (char[]) null);
     }
 
     /**
@@ -570,7 +570,7 @@ public final class StringUtil {
      * @return capitalized String, {@code null} if null String input
      */
     public static String capitalizeFully(final String str) {
-        return capitalizeFully(str, (Character) null);
+        return capitalizeFully(str, (char[]) null);
     }
 
     /**
@@ -9169,7 +9169,7 @@ public final class StringUtil {
      * @see #capitalize(String)
      */
     public static String uncapitalize(final String str) {
-        return uncapitalize(str, (Character) null);
+        return uncapitalize(str, (char[]) null);
     }
 
     /**
