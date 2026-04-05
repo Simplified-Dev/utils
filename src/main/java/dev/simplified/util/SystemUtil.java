@@ -1,6 +1,5 @@
 package dev.sbs.api.util;
 
-import dev.sbs.api.SimplifiedApi;
 import dev.sbs.api.collection.concurrent.Concurrent;
 import dev.sbs.api.collection.concurrent.ConcurrentList;
 import dev.sbs.api.collection.concurrent.ConcurrentMap;
@@ -267,6 +266,16 @@ public final class SystemUtil {
     }
 
     /**
+     * Returns the directory containing the running application's JAR or class files.
+     *
+     * @return the parent directory of this class's code source location
+     */
+    @SneakyThrows
+    public static @NotNull File getCurrentDirectory() {
+        return new File(SystemUtil.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile();
+    }
+
+    /**
      * Loads environment variables by merging {@code .env} files from the classpath and working
      * directory, then overlaying the OS environment.
      *
@@ -283,7 +292,7 @@ public final class SystemUtil {
 
         // Load <working directory>/.env
         try {
-            @Cleanup InputStream localFile = new FileInputStream(SimplifiedApi.getCurrentDirectory() + FILE_SEPARATOR + ".env");
+            @Cleanup InputStream localFile = new FileInputStream(getCurrentDirectory() + FILE_SEPARATOR + ".env");
             variables.putAll(readEnvironmentFile(localFile));
         } catch (Exception ignore) { }
 
